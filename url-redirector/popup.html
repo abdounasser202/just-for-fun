@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>URL Redirector</title>
+    <style>
+      .input-container {
+        margin-bottom: 10px;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+      }
+
+    </style>
+  </head>
+
+  <body>
+
+    <div id="main">
+      <h1>URL Redirector</h1>
+
+      <div class="container">
+        <div class="input-container">
+          <p><b>Enter the original URL</b></p>
+          <input type="text" id="originURL" placeholder="E.g., github.com">
+        </div>
+
+        <div class="input-container">
+          <p><b>Enter the new destination URL</b></p>
+          <input type="text" id="redirectURL"
+            placeholder="E.g., https://github.com/GoogleChrome/chrome-extensions-samples">
+        </div>
+
+        <div class="button-container">
+          <button id="saveButton">Create</button>
+          <button id="getURLs">View All</button>
+          <button id="clearURLs">Clear All</button>
+        </div>
+
+      </div>
+    </div>
+
+    
+    <script src="popup.js"></script>
+  </body>
+  
+</html>
+
