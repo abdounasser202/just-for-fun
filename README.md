@@ -1,16 +1,13 @@
-# url-redirector
+# Just For Fun
 
-[![Beta](https://img.shields.io/badge/status-beta-orange)](https://github.com/abdounasser202/url-redirector)
 
-![Screenshot](images/screenshot.png)
+I'm someone that has lot of ideas.
 
-**URL Redirector** is a chrome extension to enable URL redirection. 
+Every time an idea comes to my mind, I try to bring it to life even if I will not cross the line or finish it.
 
-It allows to create redirects for specific page.
+I was wondering that I used to create separate repositories each time, but now, I've chosen to use a monorepo instead.
 
-## Example
+So, when any idea will come, I will create a new folder for that or improve existing one, **Just For Fun**.
 
-- twitter.com to redirect always to your twitter list
-
-- github.com to redirect always to your organisation
+*I am unlimited, I can do whatever I want.*
 
