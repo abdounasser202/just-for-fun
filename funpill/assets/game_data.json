@@ -1,0 +1,92 @@
+{
+	"2022-11-11": {
+		"answer": "Fopa Léon Constantin",
+		"question": "Trouve le nom du développeur camerounais qui a le plus de points sur StackOverflow",
+		"indices": ["11413 points", "PHP", "Stellar Question", "12 years", "Jeff Atwood & Spolsky"],
+		"infos": "Il totalise 11413 points. Le PHP est le langage dont il a le plus contribué aux questions. Il a le bagde Stellar Question et c'est inscrit sur Stackoverflow il y'à 12 ans. StackOverflow a été créé par Jeff Atwood et Spolsky.",
+		"proposals": [
+			{"value": "LN_dev", "alert": "danger"},
+			{"value": "Sanix", "alert": "danger"},
+			{"value": "Gautier", "alert": "danger"},
+			{"value": "Valery Melou", "alert": "danger"},
+			{"value": "elhmn", "alert": "danger"},
+			{"value": "Fopa Léon Constantin", "alert": "success"},
+			{"value": "Monney Arthur", "alert": "danger"},
+			{"value": "BillyJov", "alert": "danger"},
+			{"value": "Fabrice Yopa", "alert": "danger"},
+			{"value": "Yvan Tindo", "alert": "danger"}
+		]
+	},
+	"2022-11-12": {
+		"answer": "Linus Torvalds",
+		"question": "Trouve le nom de l'une des personnes les plus influente dans l'open source",
+		"indices": ["Université Helsinki", "Années 90s", "Message sur Usenet", "Gnou", "Manchot"],
+		"infos": "Il a étudié à l'université de Helsinki. Dans les années 90. Dans les années 90 il fait un premier contact avec UNIX et commence le développement de Linux puis publie un message sur Usenet annonçant la naissance de Linux. Aujourd'hui, on parle aussi de GNU/Linux dont les mascottes sont un gnou et un manchot.",
+		"proposals": [
+			{"value": "Alan Cox", "alert": "danger"},
+			{"value": "Brian Behlendorf", "alert": "danger"},
+			{"value": "Guido Van Rossum", "alert": "danger"},
+			{"value": "Simon Phipps", "alert": "danger"},
+			{"value": "Taylor Otwell", "alert": "danger"},
+			{"value": "Richard Stallman", "alert": "danger"},
+			{"value": "Jordan Walke", "alert": "danger"},
+			{"value": "Sebastián Ramírez", "alert": "danger"},
+			{"value": "Linus Torvalds", "alert": "success"},
+			{"value": "Evan You", "alert": "danger"}
+		]
+	},
+	"2022-11-13": {
+		"answer": "Meta Quest",
+		"question": "Trouve le produit qui est au coeur du métaverse",
+		"indices": ["2014", "2 milliards USD", "Palmer Lucky", "2009 John Carmack", "Oeil"],
+		"infos": "En 2014, Facebook rachète la société Oculus VR pour 2 milliards de dollars. Palmer Lucky à l'université de californie du sud dans la ville de Playa Vista a l'idée de créer un nouveau casque virtuel peu couteux. Il rencontre en 2009 John Carmack de l'id software société de jeux vidéos propriété de la la société Zenimax et travaillent ensemble. Oculus est un mot latin qui signifie oeil. Aujourd'hui Oculus a été renommé et s'appelle Meta Quest.",
+		"proposals": [
+			{"value": "WhatsApp", "alert": "danger"},
+			{"value": "TikTok", "alert": "danger"},
+			{"value": "Alexa", "alert": "danger"},
+			{"value": "Siri", "alert": "danger"},
+			{"value": "Meta Quest", "alert": "success"},
+			{"value": "Xbox", "alert": "danger"},
+			{"value": "OneDrive", "alert": "danger"},
+			{"value": "Windows", "alert": "danger"},
+			{"value": "MacOS", "alert": "danger"},
+			{"value": "Google Glasses", "alert": "danger"}
+		]
+	},
+	"2022-11-14": {
+		"answer": "SOA",
+		"question": "Trouve de quelle architecture permettant de relier des microservices il s'agit",
+		"indices": ["N'est pas lié à une technologie", "N'est pas lié à un outil", "Ne signifie ni web ni microservice ni API", "N'est pas une solution miracle", "Est un web service"],
+		"infos": "Le SOA est avant tout une démarche architecturale et organisationnelle visant à satisfaire des besoins métiers. Les API s'inscrivent dans cette démarche orientée pour faciliter la communication entre microservices.",
+		"proposals": [
+			{"value": "REST", "alert": "danger"},
+			{"value": "XMLRPC", "alert": "danger"},
+			{"value": "JSONRPC", "alert": "danger"},
+			{"value": "GraphQL", "alert": "danger"},
+			{"value": "ESB", "alert": "danger"},
+			{"value": "Web API", "alert": "danger"},
+			{"value": "SOA", "alert": "success"},
+			{"value": "WSDL", "alert": "danger"},
+			{"value": "Middleware", "alert": "danger"},
+			{"value": "Web Map Service", "alert": "danger"}
+		]
+	},
+	"2022-11-15": {
+		"answer": "NAO",
+		"question": "Trouve de quel robot humanoïde il s'agit",
+		"indices": ["Robot de compagine", "Présenté fin 2006", "Robot humanoïde français", "Designers Erik Arlen et Thomas Knoll", "propriété de SoftBank Robotics"],
+		"infos": "NAO est utilisé comme robot de compagnie auprès d'enfant autistes. C'est un robot humanoïde français qui a été présenté fin 2006. Design réalisé par Erik Arlen et Thomas Knoll, NAO est aujourd'hui la propriété de SoftBank Robotics.",
+		"proposals": [
+			{"value": "Atlas", "alert": "danger"},
+			{"value": "ASIMO", "alert": "danger"},
+			{"value": "DER1", "alert": "danger"},
+			{"value": "NAO", "alert": "success"},
+			{"value": "Sophia", "alert": "danger"},
+			{"value": "TOPIO", "alert": "danger"},
+			{"value": "ENON", "alert": "danger"},
+			{"value": "Robot Roulage", "alert": "danger"},
+			{"value": "AIKO", "alert": "danger"},
+			{"value": "Justin", "alert": "danger"}
+		]
+	}
+}

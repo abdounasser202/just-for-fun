@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #game-container {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        border: 1px solid #000;
+      }
+
+      #pill {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Pill Breaker Game</h1>
+    <div id="score"></div>
+    <div id="game-container">
+      <div id="pill"></div>
+    </div>
+    <script>
+      const pill = document.getElementById('pill');
+      const gameContainer = document.getElementById('game-container');
+      let score = 0;
+
+      function randomPosition() {
+        const maxX = gameContainer.clientWidth - pill.clientWidth;
+        const maxY = gameContainer.clientHeight - pill.clientHeight;
+
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
+
+        pill.style.left = randomX + 'px';
+        pill.style.top = randomY + 'px';
+      }
+
+      function increaseScore() {
+        score++;
+        document.getElementById('score').textContent = 'Score: ' + score;
+        randomPosition();
+      }
+
+      pill.addEventListener('click', increaseScore);
+      gameContainer.addEventListener('click', () => {
+        if (score >= 10) {
+          alert("Congratulations! You've won the game!");
+          score = 0;
+          document.getElementById('score').textContent = 'Score: ' + score;
+        }
+      });
+
+      randomPosition();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #game-container {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        border: 1px solid #000;
+      }
+
+      #player {
+        position: absolute;
+        width: 50px;
+        height: 20px;
+        background-color: blue;
+        bottom: 0;
+      }
+
+      .pill {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+      }
+
+      #score {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Pill Breaker Game</h1>
+    <div id="game-container">
+      <div id="player"></div>
+      <div id="score">Score: 0</div>
+    </div>
+    <script>
+      const player = document.getElementById('player');
+      const gameContainer = document.getElementById('game-container');
+      const scoreDisplay = document.getElementById('score');
+      let score = 0;
+      let pillSpeed = 3; // Adjust the speed of the pills
+      let pills = [];
+
+      function createPill() {
+        const pillColors = ['red', 'green', 'blue', 'yellow'];
+        const randomColor = pillColors[Math.floor(Math.random() * pillColors.length)];
+        const pill = document.createElement('div');
+        pill.className = 'pill';
+        pill.style.backgroundColor = randomColor;
+        pill.style.top = '0px';
+        pill.style.left = Math.random() * (gameContainer.clientWidth - 20) + 'px';
+        gameContainer.appendChild(pill);
+        pills.push(pill);
+      }
+
+      function movePills() {
+        pills.forEach((pill, index) => {
+          const top = parseInt(pill.style.top, 10);
+          pill.style.top = top + pillSpeed + 'px';
+
+          if (top >= gameContainer.clientHeight) {
+            pills.splice(index, 1);
+            gameContainer.removeChild(pill);
+          }
+        });
+      }
+
+      function checkCollision() {
+        const playerRect = player.getBoundingClientRect();
+        pills.forEach((pill, index) => {
+          const pillRect = pill.getBoundingClientRect();
+          if (
+            playerRect.bottom >= pillRect.top &&
+            playerRect.left <= pillRect.right &&
+            playerRect.right >= pillRect.left
+          ) {
+            pills.splice(index, 1);
+            gameContainer.removeChild(pill);
+            increaseScore();
+          }
+        });
+      }
+
+      function increaseScore() {
+        score++;
+        scoreDisplay.textContent = 'Score: ' + score;
+      }
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowLeft') {
+          const currentLeft = parseInt(player.style.left, 10);
+          player.style.left = Math.max(0, currentLeft - 10) + 'px';
+        } else if (event.key === 'ArrowRight') {
+          const currentLeft = parseInt(player.style.left, 10);
+          player.style.left = Math.min(gameContainer.clientWidth - player.clientWidth, currentLeft + 10) + 'px';
+        }
+      });
+
+      setInterval(createPill, 1000); // Create pills every second
+      setInterval(movePills, 20); // Move pills every 20ms
+      setInterval(checkCollision, 20); // Check for collisions every 20ms
+    </script>
+  </body>
+</html>

@@ -1,0 +1,175 @@
+<templates>
+
+
+    <div t-name="App">
+
+        <ResultModal
+            winner="state.winner"
+            real_answer="state.real_answer"
+            infos="state.infos"
+        />
+
+        <Rules/>
+
+        <div class="card mb-4 border-info">
+            <div class="card-body text-center bg-info">
+                🎯 <t t-esc="state.question"/> en fonction des indices qui apparaissent
+            </div>
+        </div>
+
+        <div class="container mt-2">
+            <div class="row row-cols-2 row-cols-lg-2 g-2 g-lg-3">
+            <div class="col" t-foreach="state.new_indices" t-as="indice" t-key="indice">
+                <div class="alert alert-info" role="alert">
+                    <t t-esc="indice"/>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="input-group mt-2 mb-2">
+            <select id="proposals" t-on-change="guessAnswer">
+                <option data-placeholder="true"></option>
+            </select>
+        </div>
+
+
+        <div class="container">
+            <div class="row row-cols-2 row-cols-lg-2 g-2 g-lg-3">
+            <div class="col" t-foreach="state.answers_given" t-as="answer" t-key="answer.value">
+                <div t-attf-class="alert alert-{{answer.alert}}" role="alert">
+                    <t t-esc="answer.value"/>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+
+  <div t-name="ResultModal">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#gameResultModal" id="result-modal" hidden="1"></button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="gameResultModal" tabindex="-1" aria-labelledby="gameResultModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <h6 class="mt-2">FunPill 🟢🟣💊</h6>
+                <hr/>
+                <h5 class="mt-2">
+                    <t t-if="props.winner">Félicitations ! </t>
+                    <t t-else="">Désolé. </t> La réponse est </h5>
+                <h3 class="mt-2">✅ <t t-esc="props.real_answer"/></h3>
+                <p class="mt-2 text-muted">ℹ️ <t t-esc="props.infos"/></p>
+
+                <GifImage gif_img="state.gif_img"/>
+
+                <div class="btn-toolbar mt-2" role="toolbar" aria-label="Toolbar with button groups" style="justify-content: center; display: flex;">
+                    <div class="btn-group" role="group" aria-label="Third group">
+                      <a href="/post/all" id="surprise" class="btn btn-warning btn-sm mb-2">🚀 Maintient ta veille techno pour rester au top!</a>
+                    </div>
+                    <div class="btn-group me-2" role="group" aria-label="Second group">
+                        <a t-attf-href="https://twitter.com/intent/tweet?text={{state.tweet}}" class="btn btn-info btn-sm mb-2"><i class="bi bi-share-fill"></i> Partages FunPill sur Twitter si tu aimes</a>
+                    </div>
+                </div>
+
+                <hr/>
+
+                <h6 class="mt-2">Nouvelle question dans <Timer timer_down="state.timer_down"/></h6>
+
+
+
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+
+
+
+  <t t-name='Timer'>
+    <t t-esc='props.timer_down' />
+  </t>
+
+
+
+  <t t-name='Statistics'>
+    <div style="display: flex; align-items: center; flex-direction: column; width: 100%; gap: 16px; border-top: 2px solid rgb(238, 238, 238)padding-top: 24px;">
+        <h3>Statistiques</h3>
+        <div style="display: flex; flex-direction: row; gap: 16px;">
+            <div style="display: flex; align-items: center; flex-direction: column; gap: 4px;">
+                <h2>6</h2>
+                <div style="text-align: center; line-height: 1.2;">Played</div>
+            </div>
+            <div style="display: flex; align-items: center; flex-direction: column; gap: 4px;">
+                <h2>17%</h2>
+                <div style="text-align: center; line-height: 1.2;">Success rate</div>
+            </div>
+            <div style="display: flex; align-items: center; flex-direction: column; gap: 4px;">
+                <h2>0</h2>
+                <div style="text-align: center; line-height: 1.2;">Current streak</div>
+            </div>
+            <div style="display: flex; align-items: center; flex-direction: column; gap: 4px;">
+                <h2>1</h2>
+                <div style="text-align: center; line-height: 1.2;">Longest streak</div>
+            </div>
+        </div>
+    </div>
+  </t>
+
+
+
+  <div t-name='Rules'>
+
+    <div class="btn-toolbar mt-2 mb-2" role="toolbar" aria-label="Toolbar with button groups" style="justify-content: center; display: flex;">
+        <div class="btn-group me-2 mb-2" role="group" aria-label="First group">
+            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-question-circle"></i> Règles du jeu</button>
+        </div>
+        <div class="btn-group me-2 mb-2" role="group" aria-label="Second group">
+            <a href="https://www.peef.dev/post/nasser/89BFC242" class="btn bt-sm btn-warning"><i class="bi bi-share-fill"></i> Envoies-nous un feedback ici</a>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <div class="card mb-2">
+                    <div class="card-body text-center">
+                        🎯 Ton objectif est de trouver le FunPill 🟢🟣💊 du jour
+                    </div>
+                </div>
+
+                <p class="text-muted">
+                    <ul>
+                        <li>Tu as 5 tentatives pour deviner la bonne réponse</li>
+                        <li>Chacun des 5 <span class="badge bg-info">indices</span> apparaitra progressivement</li>
+                        <li>Un premier indice est affiché en début de jeu</li>
+                        <li>Les autres indices sont dévoilés après chaque <span class="badge bg-danger">réponse fausse</span></li>
+                        <li>Après les 5 tentatives, la <span class="badge bg-success">bonne réponse</span> est dévoilée</li>
+                        <li>A la fin du jeu, tu peux découvrir un gif marrant: c'est le FunPill 🟢🟣💊 </li>
+                    </ul>
+                </p>
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+
+    <t t-name='GifImage'>
+        <img t-attf-src="/funpill/assets/gifs/{{props.gif_img}}.gif" />
+    </t>
+
+
+
+</templates>

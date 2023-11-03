@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+
+{% block analytics %}
+{% include 'includes/analytics.html' %}
+{% endblock %}
+
+{% block title %}
+<title>FunPill 🟢🟣💊</title>
+{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="Une dose de pilules pour vous divertir et faire des découvertes">
+<meta name="og:title" content="FunPill 🟢🟣💊">
+<meta name="og:description" content="Une dose de pilules pour vous divertir et faire des découvertes">
+<meta name="og:image" content="{{url_for('funpill.static', filename='assets/gifs/funny-tablets.jpg')}}">
+<meta property="og:type" content="website">
+<meta name="og:url" content="{{url_for('funpill.play_funpill')}}">
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{url_for('funpill.static', filename='libdev/slimselect.css')}}">
+{% endblock %}
+
+{% block owl %}
+  <script src="{{url_for('funpill.static', filename='libdev/slimselect.js')}}" type="module"></script>
+  {% if dev_mode != 'development' %}
+  <script src="{{url_for('funpill.static', filename='libdev/owl.iife.min.js')}}" ></script>
+  {% else %}
+  <script src="{{url_for('funpill.static', filename='libdev/owl.iife.js')}}" ></script>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+<div class="col-lg-8 mx-auto p-3 py-md-5">
+  {% include 'includes/home_header.html' %}
+
+  <main>
+    <div class="mb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-8">
+            <div id="app"></div>
+          </div>
+          <div class="col-sm-2"></div>
+        </div>
+      </div>
+        
+    </div>
+  </main>
+
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
+<script src="{{url_for('funpill.static', filename='main.js')}}" type="module"></script>
+{% endblock %}
+
