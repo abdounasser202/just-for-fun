@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RoamingMind - Prenez vos décisions en toute confiance</title>
+	<meta name="description" content="Notre application d'aide à la décision basée sur GPT utilise l'IA pour générer
+	des recommandations personnalisées et fournir des informations supplémentaires pour aider les utilisateurs à
+	prendre des décisions éclairées. Essayez-le maintenant pour décider en toute confiance!">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>RoamingMind</h1>
+		<h2>Application d'aide à la décision basée sur GPT</h2>
+  </header>
+
+  <main>
+    <div class="menu">
+      <button class="menu-option active" data-target="destination">Choisir une destination de voyage</button>
+      <button class="menu-option" data-target="diet">Choix d'un régime alimentaire (bientôt)</button>
+    </div>
+
+    <form method="POST" action="{{ url_for('recommend') }}" id="destination-form">
+
+      {{ form.hidden_tag() }}
+
+      <label for="destination">Destination :</label>
+      {{ form.destination() }}
+
+      <label for="budget">Budget :</label>
+      {{ form.budget() }}
+
+      <label for="dates">Dates de voyage :</label>
+      {{ form.dates() }}
+
+      <label for="activities">Activités :</label>
+      {{ form.activities() }}
+
+      <button type="submit">Trouver des destinations</button>
+    </form>
+
+    <div id="results">
+      <!-- Les résultats de la recommandation seront affichés ici -->
+    </div>
+
+    <p>Donnez-nous votre avis sur notre application pour l'améliorer.</p>
+    <button id="feedback-btn" type="button">Envoyer un feedback</button>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2023 RoamingMind</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+</body>
+</html>
