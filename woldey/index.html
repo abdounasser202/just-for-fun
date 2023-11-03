@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apprendre une langue en parlant</title>
+</head>
+<body>
+    
+    <h1>Apprendre une langue en parlant</h1>
+
+    <div id="create_session">
+        
+        <h2>Débuter une session</h2>
+        
+        <p>Une session est définie par la langue parlée et la langue à apprendre avec des
+            conversations. <br> 
+            Chaque conversation porte sur un sujet spécifique, ce qui me
+            permet d'explorer <br> 
+            différents domaines de vocabulaire et de situations de la
+            vie quotidienne.</p>
+        
+        
+        <button type="button" id="createSessionButton">Commencer</button>
+    </div>
+
+
+    <div id="define_languages" style="display: none;">
+
+        <h2>Choix des langues</h2>
+
+        <p>Je sélectionne la langue parlée et celle que je veux apprendre</p>
+
+        <h3>Je parle</h3>
+        <select name="" id="">
+            <option value="">Français</option>
+        </select>
+
+        <h3>Je veux apprendre</h3>
+        <select name="" id="">
+            <option value="">Allemand</option>
+        </select>
+
+        <br><br>
+        <button type="button" id="continueButton">Continuer</button>
+
+    </div>
+
+
+    <div id="start_conversation" style="display: none;">
+
+        <h2>Préparation du sujet en cours...</h2>
+
+        <p>Chaque fois que j’ouvre l'application, elle me propose une nouvelle
+        conversation <br>
+        sur un sujet spécifique dans la langue à apprendre.</p>
+
+        <button type="button" id="startConversationButton">Parler</button>
+
+    </div>
+
+
+    <div id="conversation" style="display: none;">
+
+        <h2>Sujet: Salutation et présentation</h2>
+
+        <audio controls id="audioPlayer"></audio>
+
+        
+        <p><i>Répondez en Allemand</i> <br> Bonjour, je m'appelle Nasser</p>
+
+        <input type="file" accept="audio/*" capture="microphone" id="audioInput" hidden>
+        <audio controls id="audioPlayer"></audio>
+
+        <br><br>
+        <button type="button" id="endConversationButton">Terminé</button>
+
+    </div>
+
+
+    <div id="end_conversation" style="display: none;">
+
+        <h2>Bravo! Vous venez de gagner 1 étoile</h2>
+
+        <p>Les étoiles seront utilisés pour offrir des avantages dans l'application</p>
+
+    </div>
+
+
+
+    <script>
+        // Get references to the buttons
+            const createSessionButton = document.getElementById("createSessionButton");
+            const continueButton = document.getElementById("continueButton");
+            const startConversationButton = document.getElementById("startConversationButton");
+            const endConversationButton = document.getElementById("endConversationButton");
+
+            // Get references to the divs
+            const createSessionDiv = document.getElementById("create_session");
+            const defineLanguagesDiv = document.getElementById("define_languages");
+            const startConversationDiv = document.getElementById("start_conversation");
+            const conversationDiv = document.getElementById("conversation");
+            const endConversationDiv = document.getElementById("end_conversation");
+
+            // Add click event listeners to the buttons
+            createSessionButton.addEventListener("click", () => {
+                createSessionDiv.style.display = "none";
+                defineLanguagesDiv.style.display = "block";
+            });
+
+            continueButton.addEventListener("click", () => {
+                defineLanguagesDiv.style.display = "none";
+                startConversationDiv.style.display = "block";
+            });
+
+            startConversationButton.addEventListener("click", () => {
+                startConversationDiv.style.display = "none";
+                conversationDiv.style.display = "block";
+            });
+
+            endConversationButton.addEventListener("click", () => {
+                    conversationDiv.style.display = "none";
+                    endConversationDiv.style.display = "block";
+                });
+
+    </script>
+
+
+
+</body>
+</html>
