@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Timer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #3498db, #1462b7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #timer {
+            font-size: 48px; /* Increase the font size */
+            color: #fff;
+            text-align: center;
+        }
+
+        #startButton, #pauseButton {
+            background: #2ecc71;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1 id="timer">00:00:00</h1> <!-- Changed to h1 for bigger font size -->
+        <button id="startButton" onclick="startTimer()">Start</button>
+        <button id="pauseButton" onclick="pauseTimer()" disabled>Pause</button>
+    </div>
+
+    <script>
+        let timerInterval;
+        let seconds = 0;
+        let minutes = 0;
+        let hours = 0;
+
+        function startTimer() {
+            document.getElementById("startButton").disabled = true;
+            document.getElementById("pauseButton").disabled = false;
+
+            timerInterval = setInterval(function() {
+                seconds++;
+                if (seconds === 60) {
+                    seconds = 0;
+                    minutes++;
+                    if (minutes === 60) {
+                        minutes = 0;
+                        hours++;
+                    }
+                }
+
+                const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                document.getElementById("timer").textContent = formattedTime;
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            document.getElementById("startButton").disabled = false;
+            document.getElementById("pauseButton").disabled = true;
+            clearInterval(timerInterval);
+        }
+    </script>
+</body>
+</html>
