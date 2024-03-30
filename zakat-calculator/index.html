@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zakat Calculator</title>
+    <meta name="description" content="Zakat calculator for every country in the world">
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <main class="container">
+        <section>
+            <h1>Zakat Calculator</h1>
+            <div>
+                <a href="#">How to calculate Zakat ?</a>
+            </div>
+        </section>
+
+        <section>
+            <h3>Nisab values</h3>
+            <div>
+                <p>Country: <strong>Cameroon (FCFA)</strong></p>
+                <p>Date: <strong>26/03/2024</strong></p>
+                <div>
+                    <!-- https://www.goldapi.io/ -->
+                    <!-- https://exchangeratesapi.io/ -->
+                    <p>Gold Nisab: 85 gr * 32400 = 2754000</p>
+                    <p>Silver Nisab: 595 gr * 459.33 = 272706</p>
+                </div>
+            </div>
+            <p>Nisab based on <strong>Silver</strong></p>
+        </section>
+
+        <section>
+            <h3>Cash</h3>
+            <div class="grid">
+
+                <div>
+                    <label for="in_hand">In hand and in bank accounts</label>
+                    <input type="number" min="0" id="in_hand">
+                </div>
+                
+                <div>
+                    <label for="savings">Savings for the future</label>
+                    <input type="number" min="0" id="savings">
+                </div>
+                
+                <div>
+                    <label for="loaned_money">Money you have loaned</label>
+                    <input type="number" min="0" id="loaned_money">
+                </div>
+                
+                <div>
+                    <label for="business_investments">Business investments</label>
+                    <input type="number" min="0" id="business_investments">
+                </div>
+                
+            </div>
+        </section>
+
+        <section>
+            <h3>BUSINESS ASSETS</h3>
+            <div class="grid">
+                <div>
+                    <label for="stock_value">Stock value</label>
+                    <input type="number" min="0" id="stock_value">
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>GOLD & SILVER</h3>
+            <div class="grid">
+
+                <div>
+                    <label for="gold_silver_value">Value of silver and gold you possess</label>
+                    <input type="number" min="0" id="gold_silver_value">
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <h3>LIABILITIES</h3>
+            <div class="grid">
+                <div>
+                    <label for="money_owed">Money owed (borrowed or credit)</label>
+                    <input type="number" min="0" id="money_owed">
+                </div>
+
+                <div>
+                    <label for="salaries">Employees' salaries</label>
+                    <input type="number" min="0" id="salaries">
+                </div>
+
+                <div>
+                    <label for="outgoings_due">Other outgoings due (tax, rent, utilities)</label>
+                    <input type="number" min="0" id="outgoings_due">
+                </div>
+
+            </div>
+            <button>CALCULATE</button>
+
+        </section>
+
+        <section>
+            <h3>SUMMARY</h3>
+            <div>YOUR CURRENT ASSETS ARE WORTH: <strong>XXXX</strong></div>
+            <div>THE VALUE OF YOUR PAYABLE ZAKAT IS: <strong>XXXX</strong></div>
+        </section>
+    </main>
+
+    <footer class="container">
+        <small>
+            <a href="https://picocss.com">About</a> •
+            <a href="#">Source code</a>
+        </small>
+    </footer>
+
+    <script src="calculator.js"></script>
+</body>
+</html>
