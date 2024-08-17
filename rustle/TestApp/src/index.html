@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="lib/water.light-2.1.1.min.css">
+    <title>TestApp</title>
+</head>
+<body>
+
+    <h1>TestApp</h1>
+
+    <button id="init">Init</button>
+    <button id="query">Query</button>
+    <button id="help">Help</button>
+
+    <p>Fill this form and wait the magic</p>
+    <form>
+        <input type="text" name="testName">
+        <button>Save</button>
+    </form>
+
+    <p>Write you name and see what happen</p>
+    
+    <form class="row" id="greet-form">
+        <input id="greet-input" placeholder="Enter a name..." />
+        <button type="submit">Greet me</button>
+    </form>
+    
+    <p id="greet-msg"></p>
+    
+    <script src="lib/owl.iife.min.js"></script>
+    <script type="module" src="/lib/api-iife.js" defer></script>
+    <script type="module" src="/app.js" defer></script>
+</body>
+</html>
