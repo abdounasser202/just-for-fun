@@ -1,0 +1,11 @@
+/home/nasser/Codes/me/just-for-fun/rustle/rudock/target/debug/deps/libglyphon-7d789fad11551bb3.rmeta: /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/lib.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/error.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/text_atlas.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/text_render.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/shader.wgsl
+
+/home/nasser/Codes/me/just-for-fun/rustle/rudock/target/debug/deps/libglyphon-7d789fad11551bb3.rlib: /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/lib.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/error.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/text_atlas.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/text_render.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/shader.wgsl
+
+/home/nasser/Codes/me/just-for-fun/rustle/rudock/target/debug/deps/glyphon-7d789fad11551bb3.d: /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/lib.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/error.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/text_atlas.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/text_render.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/shader.wgsl
+
+/home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/lib.rs:
+/home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/error.rs:
+/home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/text_atlas.rs:
+/home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/text_render.rs:
+/home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glyphon-0.5.0/src/shader.wgsl:

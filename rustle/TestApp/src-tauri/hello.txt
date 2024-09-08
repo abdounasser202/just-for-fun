@@ -1,0 +1,14 @@
+sdfjksdf hekko qsdjfks hekko shkjfg
+
+def some_compute():
+    return 1
+
+func getThingsDone() {
+    fmt.Println("Do something")
+    i := 0
+    for i < 10 {
+    	i++
+    }
+    fmt.Println("Did things.")
+}
+

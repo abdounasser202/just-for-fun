@@ -1,0 +1,12 @@
+/home/nasser/Codes/me/just-for-fun/rustle/rudock/target/debug/deps/libdrm_ffi-76e1b728579f81d8.rmeta: /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/lib.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/utils.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/gem.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/ioctl.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/mode.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/syncobj.rs
+
+/home/nasser/Codes/me/just-for-fun/rustle/rudock/target/debug/deps/libdrm_ffi-76e1b728579f81d8.rlib: /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/lib.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/utils.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/gem.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/ioctl.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/mode.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/syncobj.rs
+
+/home/nasser/Codes/me/just-for-fun/rustle/rudock/target/debug/deps/drm_ffi-76e1b728579f81d8.d: /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/lib.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/utils.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/gem.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/ioctl.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/mode.rs /home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/syncobj.rs
+
+/home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/lib.rs:
+/home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/utils.rs:
+/home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/gem.rs:
+/home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/ioctl.rs:
+/home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/mode.rs:
+/home/nasser/.cargo/registry/src/index.crates.io-6f17d22bba15001f/drm-ffi-0.8.0/src/syncobj.rs:
