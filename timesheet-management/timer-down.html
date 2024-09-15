@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+</head>
+<body>
+    
+
+    <input type="number" min="0" max="60" id="min" value="00"> 
+    <span>:</span> 
+    <input type="number" id="sec" min="0" max="60" value="00">
+    <button id="launch" onclick="launchTimer()">Launch</button>
+
+
+    <script>
+
+        class Timer {
+            constructor(secondsEl, minutesEl) {
+                this.seconds = secondsEl
+                this.minutes = minutesEl
+            }
+
+            counter(targetSec, targetMin, targetTotal) {
+                self = this
+                let passedSec = 0
+                while (passedSec < targetTotal) {
+                    (function (passedSec) {
+                        setTimeout(() => {
+                            targetTotal -= 1;
+                            self.seconds.value = targetSec -= 1
+                            if (targetMin > 0 && targetSec === 0) {
+                                targetSec = targetMin * 60
+                                passedSec = 0
+                                self.minutes.value = targetMin -= 1
+                                self.seconds.value = 60
+                                targetSec = 60
+                            }
+                            if (targetTotal === 0) {
+                                self.seconds.value = 0
+                                self.minutes.value = 0
+                            }
+                        }, 1000 * passedSec)
+
+                    })(passedSec++)
+
+                }
+            }
+
+            launch() {
+                const sec = this.seconds.value
+                const min = this.minutes.value
+
+                let targetSec = parseInt(sec)
+                let targetMin = parseInt(min)
+                let targetTotal = targetSec + (targetMin * 60)
+
+                this.counter(targetSec, targetMin, targetTotal)
+                
+            }
+
+        }
+
+        function launchTimer() {
+            let seconds = document.getElementById("sec")
+            let minutes = document.getElementById("min")
+            timer = new Timer(seconds, minutes)
+            timer.launch()
+        }
+
+    </script>
+
+</body>
+</html>
