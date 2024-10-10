@@ -1,73 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Simple Timer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer Up</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(to bottom, #3498db, #1462b7);
+            font-family: Arial, sans-serif;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
         }
-
-        #timer {
-            font-size: 48px; /* Increase the font size */
-            color: #fff;
+        .container {
             text-align: center;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
-        #startButton, #pauseButton {
-            background: #2ecc71;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            margin: 10px;
+        #timer {
+            font-size: 3rem;
+            margin: 1rem 0;
+        }
+        button {
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            margin: 0.5rem;
             cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #pauseBtn {
+            background-color: #f44336;
+        }
+        #pauseBtn:hover {
+            background-color: #d32f2f;
         }
     </style>
 </head>
 <body>
-    <div>
-        <h1 id="timer">00:00:00</h1> <!-- Changed to h1 for bigger font size -->
-        <button id="startButton" onclick="startTimer()">Start</button>
-        <button id="pauseButton" onclick="pauseTimer()" disabled>Pause</button>
+    <div class="container">
+        <h1>Timer Up</h1>
+        <div id="timer">00:00:00</div>
+        <button id="startBtn">Start</button>
+        <button id="pauseBtn">Pause</button>
+        <button id="resetBtn">Reset</button>
     </div>
 
     <script>
-        let timerInterval;
+        let timer;
+        let isRunning = false;
         let seconds = 0;
-        let minutes = 0;
-        let hours = 0;
+
+        const timerElement = document.getElementById('timer');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        function updateDisplay() {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            timerElement.textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
 
         function startTimer() {
-            document.getElementById("startButton").disabled = true;
-            document.getElementById("pauseButton").disabled = false;
-
-            timerInterval = setInterval(function() {
-                seconds++;
-                if (seconds === 60) {
-                    seconds = 0;
-                    minutes++;
-                    if (minutes === 60) {
-                        minutes = 0;
-                        hours++;
-                    }
-                }
-
-                const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-                document.getElementById("timer").textContent = formattedTime;
-            }, 1000);
+            if (!isRunning) {
+                isRunning = true;
+                timer = setInterval(() => {
+                    seconds++;
+                    updateDisplay();
+                }, 1000);
+                startBtn.textContent = 'Resume';
+            }
         }
 
         function pauseTimer() {
-            document.getElementById("startButton").disabled = false;
-            document.getElementById("pauseButton").disabled = true;
-            clearInterval(timerInterval);
+            if (isRunning) {
+                isRunning = false;
+                clearInterval(timer);
+            }
         }
+
+        function resetTimer() {
+            pauseTimer();
+            seconds = 0;
+            updateDisplay();
+            startBtn.textContent = 'Start';
+        }
+
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
     </script>
 </body>
 </html>

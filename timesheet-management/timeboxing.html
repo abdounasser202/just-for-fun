@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeboxing</title>
+    <meta name="description" content="You hate timesheet ? This Timeboxing App will make you love it !">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            gap: 20px;
+        }
+
+        .left-column, .right-column {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .left-column {
+            flex: 2;
+        }
+
+        .right-column {
+            flex: 1;
+        }
+
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        #daily-target,
+        #task-form,
+        #task-list,
+        #remaining-time {
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .input-group input {
+            flex: 1;
+        }
+
+        .input-group input[type="text"]:first-child {
+            flex: 2;
+        }
+
+        input, button {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            white-space: nowrap;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .task.completed {
+            background-color: #f0f0f0;
+        }
+
+        .task button {
+            margin-left: 5px;
+        }
+
+        .task input[type="text"] {
+            width: 100px;
+        }
+
+        #remaining-time p {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border-radius: 4px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #deleteAllTasks {
+            background-color: #f44336;
+            margin-top: 20px;
+        }
+
+        #deleteAllTasks:hover {
+            background-color: #d32f2f;
+        }
+
+        .delete-task {
+            background-color: #ff9800;
+        }
+
+        .delete-task:hover {
+            background-color: #fb8c00;
+        }
+
+        .delete-task:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Timeboxing</h1>
+    <div class="container">
+        <div class="left-column">
+            <div id="daily-target">
+                <h2>Set Your Daily Target</h2>
+                <div class="input-group">
+                    <input type="text" id="target-time" placeholder="e.g., 8:30, 8h30m, 8.5">
+                    <button onclick="setDailyTarget()">Set Target</button>
+                </div>
+            </div>
+            <div id="task-section" class="hidden">
+                <div id="task-form">
+                    <h2>Add New Task</h2>
+                    <div class="input-group">
+                        <input type="text" id="task-name" placeholder="Enter task name" required>
+                        <input type="text" id="task-duration" placeholder="Duration (e.g., 1:30, 90m, 1.5)" required>
+                        <button onclick="addTask()">Add Task</button>
+                    </div>
+                </div>
+                <div id="task-list"></div>
+            </div>
+        </div>
+        <div class="right-column">
+            <div id="remaining-time"></div>
+            <button id="deleteAllTasks" onclick="deleteAllTasks()">Delete All Tasks</button>
+        </div>
+    </div>
+
+    <script>
+        let tasks = [];
+        let dailyTargetMinutes = 0;
+        let totalPlannedTime = 0;
+        let totalCompletedTime = 0;
+
+        document.getElementById('task-name').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                document.getElementById('task-duration').focus();
+            }
+        });
+
+        document.getElementById('task-duration').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
+
+        function parseTime(timeString) {
+            if (typeof timeString !== 'string') return 0;
+
+            timeString = timeString.trim().toLowerCase();
+
+            if (timeString.includes(':')) {
+                const [hours, minutes] = timeString.split(':');
+                return (parseInt(hours) || 0) * 60 + parseInt(minutes);
+            }
+
+            if (timeString.includes('h') || timeString.includes('m')) {
+                let totalMinutes = 0;
+                const hourMatch = timeString.match(/(\d+(\.\d+)?)h/);
+                const minuteMatch = timeString.match(/(\d+)m/);
+
+                if (hourMatch) totalMinutes += parseFloat(hourMatch[1]) * 60;
+                if (minuteMatch) totalMinutes += parseInt(minuteMatch[1]);
+
+                return Math.round(totalMinutes);
+            }
+
+            if (!isNaN(timeString)) {
+                return Math.round(parseFloat(timeString) * 60);
+            }
+
+            return 0;
+        }
+
+        function setDailyTarget() {
+            const targetTimeString = document.getElementById('target-time').value;
+            dailyTargetMinutes = parseTime(targetTimeString);
+            if (dailyTargetMinutes > 0) {
+                document.getElementById('task-section').classList.remove('hidden');
+                updateRemainingTime();
+                saveToLocalStorage();
+            } else {
+                alert('Please enter a valid daily target time.');
+            }
+        }
+
+        function addTask() {
+            const taskName = document.getElementById('task-name').value;
+            const taskDurationString = document.getElementById('task-duration').value;
+            const taskDuration = parseTime(taskDurationString);
+
+            if (taskName && taskDuration) {
+                tasks.push({ name: taskName, plannedDuration: taskDuration, actualDuration: taskDuration, completed: false });
+                totalPlannedTime += taskDuration;
+                updateTaskList();
+                updateRemainingTime();
+                document.getElementById('task-name').value = '';
+                document.getElementById('task-duration').value = '';
+                document.getElementById('task-name').focus();
+                saveToLocalStorage();
+            }
+        }
+
+        function completeTask(index) {
+            if (!tasks[index].completed) {
+                const task = tasks[index];
+                const timeSpentInput = document.getElementById(`time-spent-${index}`);
+                const timeSpent = parseTime(timeSpentInput.value);
+
+                if (timeSpent >= 0) {
+                    totalCompletedTime += timeSpent;
+                    task.actualDuration = timeSpent;
+                }
+
+                task.completed = true;
+                updateTaskList();
+                updateRemainingTime();
+                saveToLocalStorage();
+            }
+        }
+
+        function deleteTask(index) {
+            if (!tasks[index].completed) {
+                totalPlannedTime -= tasks[index].plannedDuration;
+                tasks.splice(index, 1);
+                updateTaskList();
+                updateRemainingTime();
+                saveToLocalStorage();
+            }
+        }
+
+        function formatTime(minutes) {
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            return `${hours}h ${mins}m`;
+        }
+
+        function updateTaskList() {
+            const taskList = document.getElementById('task-list');
+            taskList.innerHTML = '<h2>Tasks</h2>';
+            tasks.forEach((task, index) => {
+                const taskElement = document.createElement('div');
+                taskElement.className = `task ${task.completed ? 'completed' : ''}`;
+                taskElement.innerHTML = `
+                    <span>${task.name} (Planned: ${formatTime(task.plannedDuration)}, Actual: ${formatTime(task.actualDuration)})</span>
+                    <div>
+                        <input type="text" id="time-spent-${index}" placeholder="Time spent" value="${formatTime(task.actualDuration)}" ${task.completed ? 'disabled' : ''}>
+                        <button onclick="completeTask(${index})" ${task.completed ? 'disabled' : ''}>
+                            ${task.completed ? 'Completed' : 'Complete'}
+                        </button>
+                        <button class="delete-task" onclick="deleteTask(${index})" ${task.completed ? 'disabled' : ''}>
+                            Delete
+                        </button>
+                    </div>
+                `;
+                taskList.appendChild(taskElement);
+            });
+        }
+
+        function updateRemainingTime() {
+            const remainingTimeElement = document.getElementById('remaining-time');
+            if (dailyTargetMinutes > 0) {
+                const remainingTime = Math.max(0, dailyTargetMinutes - totalCompletedTime);
+                const plannedRemainingTime = Math.max(0, totalPlannedTime - totalCompletedTime);
+                const totalTaskTime = tasks.reduce((sum, task) => sum + task.plannedDuration, 0);
+                const remainingTimePlannedAndCompleted = Math.max(0, dailyTargetMinutes - totalTaskTime);
+                remainingTimeElement.innerHTML = `
+                    <h2>Time Summary</h2>
+                    <p>Daily Target: ${formatTime(dailyTargetMinutes)}</p>
+                    <p>Completed: ${formatTime(totalCompletedTime)}</p>
+                    <p>Remaining (Target): ${formatTime(remainingTime)}</p>
+                    <p>Remaining (Planned): ${formatTime(plannedRemainingTime)}</p>
+                    <p>Remaining (Based on all tasks): ${formatTime(remainingTimePlannedAndCompleted)}</p>
+                `;
+            } else {
+                remainingTimeElement.innerHTML = '<h2>Time Summary</h2><p>Please set a daily target.</p>';
+            }
+        }
+
+        function saveToLocalStorage() {
+            const data = {
+                dailyTargetMinutes,
+                tasks,
+                totalPlannedTime,
+                totalCompletedTime
+            };
+            localStorage.setItem('timeboxingData', JSON.stringify(data));
+        }
+
+        function loadFromLocalStorage() {
+            const savedData = localStorage.getItem('timeboxingData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                dailyTargetMinutes = data.dailyTargetMinutes;
+                tasks = data.tasks;
+                totalPlannedTime = data.totalPlannedTime;
+                totalCompletedTime = data.totalCompletedTime;
+
+                if (dailyTargetMinutes > 0) {
+                    document.getElementById('target-time').value = formatTime(dailyTargetMinutes);
+                    document.getElementById('task-section').classList.remove('hidden');
+                }
+
+                updateTaskList();
+                updateRemainingTime();
+            }
+        }
+
+        function deleteAllTasks() {
+            if (confirm('Are you sure you want to delete all tasks? This action cannot be undone.')) {
+                tasks = [];
+                totalPlannedTime = 0;
+                totalCompletedTime = 0;
+                dailyTargetMinutes = 0;
+                updateTaskList();
+                updateRemainingTime();
+                saveToLocalStorage();
+            }
+        }
+
+        loadFromLocalStorage();
+    </script>
+</body>
+
+</html>
