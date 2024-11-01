@@ -1,0 +1,52 @@
+Buffer                      --> the text inside of a file
+Window                      --> a way to view a specific portion of a buffer
+Frame                       --> consist of multiple windows and each window displays a buffer
+Learning more key bindings  -->  alt-x (describe-bindings) and Ctrl-h k (describe-key)
+
+find-a-file                                Ctrl-x Ctrl-f (new-file if file not exist it can be created)
+open-directory                             alt-x (then type dired and enter the directory to navigate)
+open-file                                  Ctrl-o (when you are on the active file)
+undo                                       Ctrl-x u
+
+list-all-buffers                           Ctrl-x Ctrl-b
+next-buffer                                Ctrl-x <right-arrow>
+previous-buffer                            Ctrl-x <left-arrow>
+select-buffer-by-name                      Ctrl-x b
+save-buffer                                Ctrl-x Ctrl-s
+kill current buffer                        Ctrl-x k
+quit-emacs                                 Ctrl-x Ctrl-c
+
+switch-between-windows                     Ctrl-x o
+scroll-other-window                        Ctrl-alt-v
+scroll-back-other-window                   Ctrl-S-alt-v
+
+split-window-vertical                      Ctrl-x 3
+split-window-horizontal                    Ctrl-x 2
+
+close-all-other-windows                    Ctrl-x 1
+close-current-window                       Ctrl-x 0
+
+expand-window-horizontally-left            Ctrl-x }
+expand-window-horizontally-right           Ctrl-x {
+expand-window-vertically                   Ctrl-x ^
+
+select-text                                Ctrl-space alt-f
+cut-text                                   Ctrl-w
+copy-text                                  alt-w
+paste-text                                 Ctrl-y
+empty-line-below                           Ctrl-o
+
+next-line                                  Ctrl-n
+previous-line                              Ctrl-p
+
+forward-character                          Ctrl-f
+backward-character                         Ctrl-b
+
+forward-move-by-word                       alt-f
+backward-move-by-word                      alt-b
+
+beginning-of-line-move                     Ctrl-a
+end-of-line-move                           Ctrl-e
+
+search-text-forward                        Ctrl-s <text> (and Ctrl-s again to navigate through them)
+search-text-backward                       Ctrl-r <text> (and Ctrl-r again to navigate through them)

@@ -1,0 +1,5 @@
+workspace/*
+!workspace/.gitkeep
+!workspace/requirements.txt
+.env
+odoo.conf

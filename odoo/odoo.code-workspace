@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Odoo Run",
+				"type": "debugpy",
+				"request": "attach",
+				"debugServer": 8888,
+				"pathMappings": [
+					{
+						"localRoot": "${workspaceFolder}/workspace",
+						"remoteRoot": "/mnt",
+					},
+				],
+				"logToFile": true,
+				"justMyCode": false
+			}
+		]
+	}
+}
