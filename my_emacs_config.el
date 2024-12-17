@@ -1,4 +1,4 @@
-;; My basic emacs packages
+;; My emacs config to put inside ~/.emacs.d/init.el
 
 ;; Initialize package sources
 (require 'package)
@@ -49,6 +49,39 @@
 
 ;; Set up visible bell
 (setq visible-bell t)
+
+;; ================================================================================================;;
+
+;; Duplicate the current line and place cursor on the new line.
+(defun duplicate-current-line ()
+  (interactive)
+  (let ((column (current-column)))
+    (beginning-of-line)
+    (let ((line-text (buffer-substring
+                      (point)
+                      (progn (end-of-line) (point)))))
+      (newline)
+      (insert line-text)
+      (move-to-column column))))
+
+(global-set-key (kbd "C-c d") 'duplicate-current-line)
+
+;; Move line up and down
+(defun move-line-up ()
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2))
+
+(defun move-line-down ()
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1))
+
+(global-set-key [(meta up)] 'move-line-up)
+(global-set-key [(meta down)] 'move-line-down)
+
+;; ================================================================================================;;
 
 ;; ivy for better completion
 (use-package ivy

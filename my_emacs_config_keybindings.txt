@@ -31,11 +31,16 @@ expand-window-horizontally-right           Ctrl-x {
 expand-window-vertically                   Ctrl-x ^
 
 select-text                                Ctrl-space alt-f
+select-all-text                            Ctrl-x h
+multi-select & replace                     Ctrl-x space  Ctrl-x r t
 cut-text                                   Ctrl-w
 copy-text                                  alt-w
 paste-text                                 Ctrl-y
 empty-line-below                           Ctrl-o
+duplicate-line                             Ctrl-c d
 
+move-line-up                               alt <up-arrow>
+move-line-down                             alt <down-arrow>
 next-line                                  Ctrl-n
 previous-line                              Ctrl-p
 
@@ -50,3 +55,7 @@ end-of-line-move                           Ctrl-e
 
 search-text-forward                        Ctrl-s <text> (and Ctrl-s again to navigate through them)
 search-text-backward                       Ctrl-r <text> (and Ctrl-r again to navigate through them)
+
+treemacs-open-file-bowser                  Ctrl-x t t
+treemacs-add-project-folder                Ctrl-c Ctrl-p
+treemacs-create-file                       c-f

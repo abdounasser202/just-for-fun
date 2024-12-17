@@ -19,6 +19,10 @@ services:
       - odoo-data:/var/lib/odoo
       - ./odoo.conf:/etc/odoo/odoo.conf
       - ./workspace:/mnt
+      - ./workspace/extra-addons/practice_owl/exercise_3:/mnt/extra-addons/practice_owl/exercise_3
+      - ./workspace/extra-addons/practice_owl/exercise_4:/mnt/extra-addons/practice_owl/exercise_4
+      - ./workspace/extra-addons/practice_owl/exercise_7:/mnt/extra-addons/practice_owl/exercise_7
+      - ./workspace/extra-addons/practice_owl/exercise_6:/mnt/extra-addons/practice_owl/exercise_6
 
   db:
     container_name: ${PROJECT_NAME}-DB
