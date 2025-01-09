@@ -60,4 +60,5 @@ unaccent = False
 upgrade_path = 
 without_demo = False
 workers = 0
+dev_mode = reload
 
