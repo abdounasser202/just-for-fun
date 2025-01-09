@@ -92,10 +92,76 @@ int fibonacci(int n){
     return fibonacci(n-1) + fibonacci(n-2);
 }
 
+
+var _nobleGases = {1: 2};
+// this is a lambda function.
+final isNoble = (int atomicNumber) => _nobleGases[atomicNumber] != null;
+
+
+// function with named parameters
+void enableColors({bool colorRed = true, required bool? colorBlue}) {
+     print("$colorRed, $colorBlue");
+}
+
+
+// here device is optional
+String say(String from, String msg, [String? device]) {
+       var result = "$from says $msg";
+       if (device != null) {
+       	  result = "$result with a $device";
+       }
+       return result;
+}
+
+void anonymous() {
+     var listFruits = ["apple", "Orange", "mangO"];
+
+     var fruitsUpperCase = listFruits.map((item) {
+     	 return item.toUpperCase();
+     }).toList();
+
+     for (var item in fruitsUpperCase) {
+     	 print("$item : ${item.length}");
+     }
+
+}
+
+void anonymous2() {
+   var listFruits = ["apple", "Orange", "mangO"];
+   var fruitsUpperCase = listFruits.map((item) => item.toUpperCase()).toList();
+   fruitsUpperCase.forEach((item) => print("$item : ${item.length}"));
+}
+
+// synchronous function return Iterable an uses sync* with yield
+Iterable<int> naturalsTo(int n) sync* {
+	      int k = 0;
+	      while (k < n) yield k++;
+}
+
+// asynchronous function returns Stream obj and uses async* with yield
+Stream<int> asynchronousNaturalsTo(int n) async* {
+	    int k = 0;
+	    while (k < n) yield k++;
+}
+
 void main() {
+
+     anonymous();
+     anonymous2();
+
+
     var result = fibonacci(12);
     print(result);
 
      var listOfPlanets = ['March', 'Jupiter', 'Uranus'];
      listOfPlanets.where((name) => name.contains("u")).forEach(print);
+
+     print(isNoble(3));
+
+     enableColors(colorBlue: false);
+     enableColors(colorRed: false, colorBlue: true);
+
+     print(say("nasser", "bonjour"));
+     print(say("abdou", "bonsoir", null));
+     print(say("abdou", "bonsoir", "LG"));
 }
