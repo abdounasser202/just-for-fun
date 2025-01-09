@@ -51,11 +51,11 @@
 (setq visible-bell t)
 
 (when window-system
-  (set-frame-size (selected-frame) 175 65))
+  (set-frame-size (selected-frame) 175 60))
 
 ;; To make it apply to new frames as well:
 (add-to-list 'default-frame-alist '(width . 175))
-(add-to-list 'default-frame-alist '(height . 65))
+(add-to-list 'default-frame-alist '(height . 60))
 
 ;; ================================================================================================;;
 
