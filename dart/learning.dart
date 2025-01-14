@@ -144,6 +144,25 @@ Stream<int> asynchronousNaturalsTo(int n) async* {
 	    while (k < n) yield k++;
 }
 
+class Point {
+
+      int x;
+      int y;
+
+      // this is the contructor
+      Point(this.x, this.y) {
+          // this can also be used as constructor : Point.anyName(this.x, this.y)
+          print("Initialisation");
+	  print("x => $x");
+	  print("y => $y");
+      }
+
+      int getSomeValue() {
+      	   return (this.x * this.x) - this.y;
+      }
+
+}
+
 void main() {
 
      anonymous();
@@ -164,4 +183,8 @@ void main() {
      print(say("nasser", "bonjour"));
      print(say("abdou", "bonsoir", null));
      print(say("abdou", "bonsoir", "LG"));
+
+     var p = Point(6, 7);
+     print(p.getSomeValue());
+     print('The type of p is ${p.runtimeType}');
 }
