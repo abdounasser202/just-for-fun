@@ -1,0 +1,25 @@
+oh-my-zsh
+emacs
+tmux
+docker
+node
+npm
+rustc
+dart
+flutter
+SourceGit
+Xournal++
+Bisq
+Electrum
+VSCode
+OpenShot
+OBS
+VLC
+KeePassXC
+Remmina
+SimpleScreenRecorder
+Transmission BitTorrent
+IPTVnator
+LibreOffice
+Chromium
+

@@ -1,7 +1,0 @@
-oh-my-zsh
-doomemacs
-tmux
-docker
-node
-npm
-rustc
