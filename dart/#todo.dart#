@@ -1,0 +1,41 @@
+/*
+
+A command line todo app that uses sqlite to store data to learn dart
+It uses https://pub.dev/packages/sqlite3
+
+
+
+*/
+
+
+
+
+class TodoServices {
+
+
+      void createTodo() {}
+
+      void showTodo(int? id) {
+      	   print("showing $id");
+      }
+
+      void listTodo() {}
+
+      void deleteTodo(int? id) {
+      	   print("deleted $id");
+      }
+
+      void editTodo(id) {}
+
+
+}
+
+
+
+void main() {
+
+     TodoServices todo = TodoServices();
+     todo.showTodo(45);
+     todo.deleteTodo(45);
+
+}
