@@ -1,0 +1,7 @@
+[project]
+name = "llm-checker"
+version = "0.1.0"
+description = "Simple LLM compatibility checker"
+dependencies = [
+    "flask>=3.0.0",
+]

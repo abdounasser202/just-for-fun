@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Can I Run LLMs?</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+        body { max-width: 800px; margin: 0 auto; padding: 1rem; }
+        .offers { margin-top: 2rem; }
+        .offer-card { 
+            margin: 1rem 0; 
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2ecc71;
+        }
+        .best-value {
+            border: 2px solid #2ecc71;
+            position: relative;
+        }
+        .best-value::after {
+            content: "BEST VALUE";
+            position: absolute;
+            top: -12px;
+            right: 10px;
+            background: #2ecc71;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            margin: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2ecc71;
+        }
+        .recommendation-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+        .buy-button {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .buy-button:hover {
+            background: #27ae60;
+        }
+        #checkButton {
+            font-size: 1.2rem;
+            padding: 1rem 2rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #checkButton:hover {
+            background: #2980b9;
+        }
+        .loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .compatible { color: #2ecc71; }
+        .not-compatible { color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Can I Run Local LLMs?</h1>
+        <p>Find out if your PC can run AI models locally - check your compatibility in seconds!</p>
+        
+        <button id="checkButton">Check My PC</button>
+
+        <div id="results" hidden>
+            <h2>Your System:</h2>
+            <div id="specs" class="recommendation-card"></div>
+            
+            <div id="compatibility"></div>
+
+            <div id="offers" class="offers">
+                <h2>Get Started with Local LLMs</h2>
+                
+                <div class="offer-card">
+                    <h3>Basic Setup Guide</h3>
+                    <span class="price">$5</span>
+                    <ul class="feature-list">
+                        <li>Custom installation guide for your PC</li>
+                        <li>Optimized settings guide</li>
+                        <li>Performance expectations</li>
+                        <li>Common issues & solutions</li>
+                    </ul>
+                    <button class="buy-button" onclick="window.location.href='/buy/setup-guide'">
+                        Get My Guide
+                    </button>
+                </div>
+
+                <div class="offer-card best-value">
+                    <h3>Performance Optimizer Package</h3>
+                    <span class="price">$15</span>
+                    <ul class="feature-list">
+                        <li>Everything in Basic Setup Guide</li>
+                        <li>RAM optimization scripts</li>
+                        <li>Custom quantization settings</li>
+                        <li>Performance monitoring tools</li>
+                        <li>Priority email support</li>
+                    </ul>
+                    <button class="buy-button" onclick="window.location.href='/buy/performance'">
+                        Optimize My PC
+                    </button>
+                </div>
+
+                <div id="hardware-recommendations"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const checkButton = document.getElementById('checkButton');
+        const results = document.getElementById('results');
+
+        async function getSystemInfo() {
+            const cpuCores = navigator.hardwareConcurrency || 4;
+            const estimatedRam = cpuCores * 2;
+            
+            let gpu = 'Integrated/Unknown';
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl');
+                if (gl) {
+                    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                    if (debugInfo) {
+                        gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+                    }
+                }
+            } catch (e) {
+                console.log('GPU detection failed:', e);
+            }
+
+            return {
+                ram_gb: estimatedRam,
+                cpu_cores: cpuCores,
+                gpu: gpu
+            };
+        }
+
+        async function checkCompatibility() {
+            try {
+                checkButton.disabled = true;
+                checkButton.textContent = 'Checking...';
+                checkButton.classList.add('loading');
+                
+                const systemInfo = await getSystemInfo();
+                
+                const specs = document.getElementById('specs');
+                specs.innerHTML = `
+                    <ul>
+                        <li>Estimated RAM: ${systemInfo.ram_gb}GB (estimated from CPU cores)</li>
+                        <li>CPU Cores: ${systemInfo.cpu_cores}</li>
+                        <li>GPU: ${systemInfo.gpu}</li>
+                    </ul>
+                    <p><small>Note: Actual RAM may differ from estimation.</small></p>
+                `;
+                
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(systemInfo)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Server returned ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                results.hidden = false;
+                const compatibility = document.getElementById('compatibility');
+                compatibility.innerHTML = Object.entries(data.compatibility)
+                    .map(([size, info]) => `
+                        <div class="recommendation-card">
+                            <h3>${size.replace('_', ' ').toUpperCase()}</h3>
+                            <p class="${info.compatible ? 'compatible' : 'not-compatible'}">
+                                ${info.compatible ? '✓ Compatible' : '✗ Not Recommended'}
+                            </p>
+                            ${info.compatible ? `
+                                <ul>
+                                    ${info.models.map(m => `<li>${m}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                        </div>
+                    `).join('');
+
+                // Add hardware recommendations
+                const recommendations = document.getElementById('hardware-recommendations');
+                recommendations.innerHTML = '<h2>Recommended Upgrades</h2>';
+                
+                if (systemInfo.ram_gb < 16) {
+                    recommendations.innerHTML += `
+                        <div class="recommendation-card">
+                            <h4>💡 Recommended: RAM Upgrade</h4>
+                            <p>Upgrade to 16GB RAM for better performance with medium-sized models</p>
+                            <a href="[YOUR_AFFILIATE_LINK]" class="buy-button">View RAM Options</a>
+                        </div>
+                    `;
+                }
+                
+                if (!systemInfo.gpu.toLowerCase().includes('nvidia')) {
+                    recommendations.innerHTML += `
+                        <div class="recommendation-card">
+                            <h4>💡 Consider Cloud Options</h4>
+                            <p>Get faster inference speeds with cloud GPU providers</p>
+                            <a href="[YOUR_AFFILIATE_LINK]" class="buy-button">View Cloud Options</a>
+                        </div>
+                    `;
+                }
+                    
+            } catch (error) {
+                console.error('Error:', error);
+                alert(`Something went wrong: ${error.message}`);
+            } finally {
+                checkButton.disabled = false;
+                checkButton.textContent = 'Check My PC';
+                checkButton.classList.remove('loading');
+            }
+        }
+        
+        checkButton.onclick = checkCompatibility;
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Compatibility Checker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+</head>
+<body>
+    <main>
+        <h1>Can I Run Local LLMs?</h1>
+        
+        <button id="checkButton">Check My PC</button>
+
+        <div id="results" hidden>
+            <h2>Your System:</h2>
+            <div id="specs"></div>
+            
+            <h2>Compatibility Results:</h2>
+            <div id="compatibility"></div>
+        </div>
+    </main>
+
+    <script>
+        const checkButton = document.getElementById('checkButton');
+        const results = document.getElementById('results');
+
+        async function getSystemInfo() {
+            // Get CPU cores
+            const cpuCores = navigator.hardwareConcurrency || 4;
+            
+            // Estimate RAM based on cores (very rough estimate)
+            const estimatedRam = cpuCores * 2;
+            
+            // Try to get GPU info
+            let gpu = 'Integrated/Unknown';
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl');
+                if (gl) {
+                    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                    if (debugInfo) {
+                        gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+                    }
+                }
+            } catch (e) {
+                console.log('GPU detection failed:', e);
+            }
+
+            return {
+                ram_gb: estimatedRam,
+                cpu_cores: cpuCores,
+                gpu: gpu
+            };
+        }
+
+        async function checkCompatibility() {
+            try {
+                checkButton.disabled = true;
+                checkButton.textContent = 'Checking...';
+                
+                // Get system info
+                const systemInfo = await getSystemInfo();
+                
+                // Show specs
+                const specs = document.getElementById('specs');
+                specs.innerHTML = `
+                    <ul>
+                        <li>Estimated RAM: ${systemInfo.ram_gb}GB (estimated from CPU cores)</li>
+                        <li>CPU Cores: ${systemInfo.cpu_cores}</li>
+                        <li>GPU: ${systemInfo.gpu}</li>
+                    </ul>
+                    <p><small>Note: Actual RAM may differ from estimation.</small></p>
+                `;
+                
+                // Send to server
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(systemInfo)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Server returned ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                // Show results
+                results.hidden = false;
+                const compatibility = document.getElementById('compatibility');
+                compatibility.innerHTML = Object.entries(data.compatibility)
+                    .map(([size, info]) => `
+                        <section>
+                            <h3>${size.replace('_', ' ').toUpperCase()}</h3>
+                            <p>${info.compatible ? '✓ You can run:' : '✗ Not recommended (RAM requirement not met)'}</p>
+                            ${info.compatible ? `
+                                <ul>
+                                    ${info.models.map(m => `<li>${m}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                        </section>
+                    `).join('');
+                    
+            } catch (error) {
+                console.error('Error:', error);
+                alert(`Something went wrong: ${error.message}`);
+            } finally {
+                checkButton.disabled = false;
+                checkButton.textContent = 'Check My PC';
+            }
+        }
+        
+        checkButton.onclick = checkCompatibility;
+    </script>
+</body>
+</html>

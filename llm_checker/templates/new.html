@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local LLM Compatibility Checker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+        body { max-width: 800px; margin: 0 auto; padding: 1rem; }
+        .card {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+        .model-tier {
+            border-left: 4px solid #3498db;
+            margin: 1rem 0;
+            padding: 1rem;
+        }
+        .compatible { color: #2ecc71; }
+        .not-compatible { color: #e74c3c; }
+        .requirements-list {
+            list-style: none;
+            padding: 0;
+        }
+        .requirements-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .requirements-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+        }
+        .recommendation {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 4px;
+        }
+        .recommendation.high {
+            background: #ffecec;
+            border-left: 4px solid #e74c3c;
+        }
+        .recommendation.medium {
+            background: #fff4e6;
+            border-left: 4px solid #f39c12;
+        }
+        .recommendation.low {
+            background: #eafaf1;
+            border-left: 4px solid #2ecc71;
+        }
+        .buy-button {
+            background: #3498db;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .buy-button:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Can I Run Local LLMs?</h1>
+        <p>Check if your PC can run AI models locally and get personalized recommendations.</p>
+        
+        <button id="checkButton" class="buy-button">Check My PC</button>
+
+        <div id="results" hidden>
+            <div id="specs" class="card"></div>
+            
+            <div id="compatibility"></div>
+
+            <div id="recommendations" class="card">
+                <h2>Upgrade Recommendations</h2>
+                <div id="recommendation-list"></div>
+            </div>
+
+            <div class="card">
+                <h2>Get Started</h2>
+                <p>Ready to run LLMs on your PC? Get our optimization guides:</p>
+                
+                <div class="model-tier">
+                    <h3>Basic Setup Guide - $5</h3>
+                    <ul class="requirements-list">
+                        <li>Step-by-step installation guide</li>
+                        <li>Optimized settings for your hardware</li>
+                        <li>Performance tips & tweaks</li>
+                        <li>Troubleshooting guide</li>
+                    </ul>
+                    <button class="buy-button" onclick="window.location.href='/buy/basic'">Get Started</button>
+                </div>
+
+                <div class="model-tier">
+                    <h3>Performance Package - $15</h3>
+                    <ul class="requirements-list">
+                        <li>Everything in Basic Guide</li>
+                        <li>Custom quantization settings</li>
+                        <li>Memory optimization script</li>
+                        <li>Performance monitoring tools</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <button class="buy-button" onclick="window.location.href='/buy/pro'">Optimize Now</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const checkButton = document.getElementById('checkButton');
+        const results = document.getElementById('results');
+
+        async function getSystemInfo() {
+            const cpuCores = navigator.hardwareConcurrency || 4;
+            const estimatedRam = cpuCores * 2;
+            
+            let gpu = 'Integrated/Unknown';
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl');
+                if (gl) {
+                    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                    if (debugInfo) {
+                        gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+                    }
+                }
+            } catch (e) {
+                console.log('GPU detection failed:', e);
+            }
+
+            return {
+                ram_gb: estimatedRam,
+                cpu_cores: cpuCores,
+                gpu: gpu
+            };
+        }
+
+        async function checkCompatibility() {
+            try {
+                checkButton.disabled = true;
+                checkButton.textContent = 'Checking...';
+                
+                const systemInfo = await getSystemInfo();
+                
+                const specs = document.getElementById('specs');
+                specs.innerHTML = `
+                    <h2>Your System</h2>
+                    <ul class="requirements-list">
+                        <li>Estimated RAM: ${systemInfo.ram_gb}GB</li>
+                        <li>CPU Cores: ${systemInfo.cpu_cores}</li>
+                        <li>GPU: ${systemInfo.gpu}</li>
+                    </ul>
+                    <p><small>Note: RAM is estimated. For accurate results, please verify your actual RAM amount.</small></p>
+                `;
+                
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(systemInfo)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                results.hidden = false;
+                
+                // Show compatibility
+                const compatibility = document.getElementById('compatibility');
+                compatibility.innerHTML = Object.entries(data.compatibility)
+                    .map(([size, info]) => `
+                        <div class="model-tier">
+                            <h3>${size.replace('_', ' ').toUpperCase()}</h3>
+                            <p class="${info.compatible ? 'compatible' : 'not-compatible'}">
+                                ${info.compatible ? '✓ Your PC can run these models' : '✗ Upgrade needed'}
+                            </p>
+                            <h4>Requirements:</h4>
+                            <ul class="requirements-list">
+                                <li>RAM: ${info.requirements.ram}</li>
+                                <li>GPU: ${info.requirements.vram}</li>
+                                <li>CPU: ${info.requirements.cpu}</li>
+                            </ul>
+                            ${info.compatible ? `
+                                <h4>Recommended Models:</h4>
+                                <ul class="requirements-list">
+                                    ${info.models.map(m => `<li>${m}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                        </div>
+                    `).join('');
+
+                // Show recommendations
+                const recommendationList = document.getElementById('recommendation-list');
+                recommendationList.innerHTML = data.recommendations
+                    .map(rec => `
+                        <div class="recommendation ${rec.urgency}">
+                            <h4>${rec.type.toUpperCase()} Upgrade</h4>
+                            <p>${rec.message}</p>
+                        </div>
+                    `).join('');
+                    
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error checking compatibility. Please try again.');
+            } finally {
+                checkButton.disabled = false;
+                checkButton.textContent = 'Check My PC';
+            }
+        }
+        
+        checkButton.onclick = checkCompatibility;
+    </script>
+</body>
+</html>
