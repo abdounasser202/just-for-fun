@@ -19,6 +19,7 @@ services:
       - odoo-data:/var/lib/odoo
       - ./odoo.conf:/etc/odoo/odoo.conf
       - ./workspace/extra-addons:/mnt/extra-addons
+      - ./workspace/odoo-apps:/mnt/odoo-apps
 
   db:
     container_name: ${PROJECT_NAME}-DB
