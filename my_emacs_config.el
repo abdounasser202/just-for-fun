@@ -372,3 +372,17 @@
 (add-hook 'nxml-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c C-p") 'pretty-print-xml-buffer)))
+
+;; Add custom keywords to org-todo-keywords
+(setq org-todo-keywords
+      '((sequence "TODO" "WIP" "DOING" "PAUSE" "|" "DONE")))
+
+;; Optional: Define custom faces for the new keywords
+(setq org-todo-keyword-faces
+      '(("WIP" . (:foreground "orange" :weight bold))
+        ("DOING" . (:foreground "yellow" :weight bold))
+        ("PAUSE" . (:foreground "purple" :weight bold))))
+
+;; Optional: Define fast selection keys for the new states
+(setq org-todo-keywords-1
+      '((sequence "TODO(t)" "WIP(w)" "DOING(d)" "PAUSE(p)" "|" "DONE(D)")))
